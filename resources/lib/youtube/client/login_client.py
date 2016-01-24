@@ -6,6 +6,7 @@ import urlparse
 from resources.lib.kodion import simple_requests as requests
 from resources.lib.youtube.youtube_exceptions import LoginException
 
+# Kodi 17 support and API keys by Uukrul
 
 class LoginClient(object):
     CONFIGS = {
