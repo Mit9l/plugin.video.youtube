@@ -65,6 +65,7 @@ class LoginClient(object):
             'key': 'AIzaSyB6-pMlWO_XmgdM15VKGeLH4QsipdToBas',
             'id': '131835494776-s0ef9jorci9vl0kaa5sqslupqvlku6ej.apps.googleusercontent.com',
             'secret': 'Fz9nnfVGoH6jiLc0iefvzZYM'
+        }
     }
 
     def __init__(self, config={}, language='en-US', access_token='', access_token_tv=''):
