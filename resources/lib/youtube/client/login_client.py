@@ -59,7 +59,12 @@ class LoginClient(object):
             'key': 'AIzaSyBbgC4PZ2_hUdqqX7MIgdg2fK1nohv1jrw',
             'id': '17932591024-8jruv1v7s78gipo7s17c91bnk26rqgpf.apps.googleusercontent.com',
             'secret': 'bK9T234WWhqzYdcQLif1L35K'
-        }
+        },
+        'youtube-for-kodi-17': {
+            'system': 'Krypton',
+            'key': 'AIzaSyB6-pMlWO_XmgdM15VKGeLH4QsipdToBas',
+            'id': '131835494776-s0ef9jorci9vl0kaa5sqslupqvlku6ej.apps.googleusercontent.com',
+            'secret': 'Fz9nnfVGoH6jiLc0iefvzZYM'
     }
 
     def __init__(self, config={}, language='en-US', access_token='', access_token_tv=''):
