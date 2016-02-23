@@ -60,15 +60,15 @@ class LoginClient(object):
         },
         'youtube-for-kodi-16': {
             'system': 'Jarvis',
-            'key': 'AIzaSyBbgC4PZ2_hUdqqX7MIgdg2fK1nohv1jrw',
-            'id': '17932591024-8jruv1v7s78gipo7s17c91bnk26rqgpf.apps.googleusercontent.com',
-            'secret': 'bK9T234WWhqzYdcQLif1L35K'
-        },
-        'youtube-for-kodi-17': {
-            'system': 'Krypton',
             'key': 'AIzaSyB4Wy7VEoCvtcgReJCzKKAZCP1aZyvjuWo',
             'id': '826708200151-iqi7ovuv4bg3guinsladtd9tq7h08rcb.apps.googleusercontent.com',
             'secret': '78EjmWrQOWfK5GaCxqe4Tx4w'
+        },
+        'youtube-for-kodi-17': {
+            'system': 'Krypton',
+            'key': 'AIzaSyCf60r8v8K8isYOt4pfcLfAOgyaiOl2gQM',
+            'id': '876361093606-df4dudti2a3j7pksvuvqibr1kmtb7607.apps.googleusercontent.com',
+            'secret': 'mJlpCXQUjKwxQ5KLihh7uJBo'
         }
     }
 
