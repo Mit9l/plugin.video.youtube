@@ -2,11 +2,14 @@ __author__ = 'bromix'
 
 import time
 import urlparse
+import xbmc
 
 from resources.lib.kodion import simple_requests as requests
 from resources.lib.youtube.youtube_exceptions import LoginException
 
 # Kodi 17 support and API keys by Uukrul
+def log_error(text):
+    xbmc.log('YouTube login_client.py - %s' % (text),xbmc.LOGERROR)
 
 class LoginClient(object):
     CONFIGS = {
@@ -63,9 +66,9 @@ class LoginClient(object):
         },
         'youtube-for-kodi-17': {
             'system': 'Krypton',
-            'key': 'AIzaSyB6-pMlWO_XmgdM15VKGeLH4QsipdToBas',
-            'id': '131835494776-s0ef9jorci9vl0kaa5sqslupqvlku6ej.apps.googleusercontent.com',
-            'secret': 'Fz9nnfVGoH6jiLc0iefvzZYM'
+            'key': 'AIzaSyB4Wy7VEoCvtcgReJCzKKAZCP1aZyvjuWo',
+            'id': '826708200151-iqi7ovuv4bg3guinsladtd9tq7h08rcb.apps.googleusercontent.com',
+            'secret': '78EjmWrQOWfK5GaCxqe4Tx4w'
         }
     }
 
@@ -127,6 +130,7 @@ class LoginClient(object):
 
         result = requests.post(url, data=post_data, headers=headers, verify=False)
         if result.status_code != requests.codes.ok:
+            log_error('revoke')
             raise LoginException('Logout Failed')
 
         pass
@@ -167,6 +171,7 @@ class LoginClient(object):
 
         result = requests.post(url, data=post_data, headers=headers, verify=False)
         if result.status_code != requests.codes.ok:
+            log_error('refresh_token')
             raise LoginException('Login Failed')
 
         if result.headers.get('content-type', '').startswith('application/json'):
@@ -212,6 +217,7 @@ class LoginClient(object):
 
         result = requests.post(url, data=post_data, headers=headers, verify=False)
         if result.status_code != requests.codes.ok:
+            log_error('get_device_token')
             raise LoginException('Login Failed')
 
         if result.headers.get('content-type', '').startswith('application/json'):
@@ -247,6 +253,7 @@ class LoginClient(object):
 
         result = requests.post(url, data=post_data, headers=headers, verify=False)
         if result.status_code != requests.codes.ok:
+            log_error(result.text)
             raise LoginException('Login Failed')
 
         if result.headers.get('content-type', '').startswith('application/json'):
@@ -287,6 +294,7 @@ class LoginClient(object):
 
         result = requests.post(url, data=post_data, headers=headers, verify=False)
         if result.status_code != requests.codes.ok:
+            log_error('authenticate')
             raise LoginException('Login Failed')
 
         lines = result.text.replace('\n', '&')
