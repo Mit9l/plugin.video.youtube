@@ -48,9 +48,9 @@ class LoginClient(object):
         },
         'youtube-for-kodi-14': {
             'system': 'Helix',
-            'key': 'AIzaSyCOxb_JvsI1-ZneJ2SXTkwZvW3fdtaR3bg',
-            'id': '45906745725-ucn38a9eumqcgfkmv14th17s0eq8kt5f.apps.googleusercontent.com',
-            'secret': 'sK6GK-ZhzgXWehCdjaGybHRi'
+            'key': 'AIzaSyDoGc3e7QRlWAn6ukQFoezx3uU2GAynYEI',
+            'id': '679912363153-72r33u32en0k2htqqvrdtt1mt4km013d.apps.googleusercontent.com',
+            'secret': 'GVWjcVQ4q-wKqcqdCrAvdZhM'
         },
         'youtube-for-kodi-15': {
             'system': 'Isengard',
