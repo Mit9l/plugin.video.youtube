@@ -1,3 +1,6 @@
+5.1.18c (2016-02-24)
+[fix] Change API Keys for kodi 14 and Kodi 15. but "live" still do not work. I dont' know it's API limit or implementation.
+
 5.1.18 (2016-02-23)
 [fix] Change API Keys for Kodi 16 and Kodi 17. Hope it help.
 
