@@ -1,3 +1,6 @@
+5.1.18d (2016-02-25)
+[fix] Live folder is now working. Change API key for kodi 12 and kodi 13.
+
 5.1.18c (2016-02-24)
 [fix] Change API Keys for kodi 14 and Kodi 15. but "live" still do not work. I dont' know it's API limit or implementation.
 

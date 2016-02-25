@@ -23,28 +23,28 @@ class LoginClient(object):
         'youtube-for-kodi-quota': {
             'token-allowed': False,
             'system': 'All',
-            'key': 'AIzaSyA7v1QOHz8Q4my5J8uGSpr0zRrntRjnMmk',
-            'id': '597640352045-7um2gr1v5rgobm5bf07ebesm3er48286.apps.googleusercontent.com',
-            'secret': 'VmyQ12KkJ_N3yegu4Y-VGCXd'
+            'key': 'AIzaSyBhQvk9fuc6y_0_vdOJn3g5HiGugplyUwg',
+            'id': '1027139679087-8odn2pq90u92qnna7h7j16lp80pabjfq.apps.googleusercontent.com',
+            'secret': 'Z750d1Cs4OtBgwlPOBraz-8u'
         },
         'youtube-for-kodi-fallback': {
             'token-allowed': False,
             'system': 'Fallback!',
-            'key': 'AIzaSyBEvxICg_E5g8mfndYjWHH4WEDF2fN_zXM',
-            'id': '705000440035-f7v8mhn75udt6l20r75ko7f15c39ns1c.apps.googleusercontent.com',
-            'secret': 'XeLKD8o_mdzEBDy9Nw5KMKbr'
+            'key': 'AIzaSyDXacvXHzPce8UJPK_SJXkvGVS2sjw5ngc',
+            'id': '932124282136-1h2fg2a2bfahpkvbg8nk05injmcm60ao.apps.googleusercontent.com',
+            'secret': 'Z9ctN0RAzB2w0sWuDFnGiLH2'
         },
         'youtube-for-kodi-12': {
             'system': 'Frodo',
-            'key': 'AIzaSyB6-pMlWO_XmgdM15VKGeLH4QsipdToBas',
-            'id': '131835494776-s0ef9jorci9vl0kaa5sqslupqvlku6ej.apps.googleusercontent.com',
-            'secret': 'Fz9nnfVGoH6jiLc0iefvzZYM'
+            'key': 'AIzaSyAtSGFXt7PierQaetyz_zawg6SiMQbEoLU',
+            'id': '132924520075-4bfjom7ig91dgaum22gnnqs54o0pm3cr.apps.googleusercontent.com',
+            'secret': 'UGiB-A2ti-QbrWWeW1ijZaBy'
         },
         'youtube-for-kodi-13': {
             'system': 'Gotham',
-            'key': 'AIzaSyB6-pMlWO_XmgdM15VKGeLH4QsipdToBas',
-            'id': '131835494776-s0ef9jorci9vl0kaa5sqslupqvlku6ej.apps.googleusercontent.com',
-            'secret': 'Fz9nnfVGoH6jiLc0iefvzZYM'
+            'key': 'AIzaSyCmGt3h1JNxoToALdQTECpK5V5dUQXZh8I',
+            'id': '566042245832-qo8a0d9gag422gb2qqneb9k38t1qmi0k.apps.googleusercontent.com',
+            'secret': '5PbZ5SXOQmn95V-oRONbVXxO'
         },
         'youtube-for-kodi-14': {
             'system': 'Helix',
