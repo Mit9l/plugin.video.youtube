@@ -1,5 +1,7 @@
+from tokenize import group
 __author__ = 'bromix'
 
+import os
 from resources.lib.youtube.helper import yt_subscriptions
 from resources.lib import kodion
 from resources.lib.kodion.utils import FunctionCache
@@ -8,6 +10,8 @@ from resources.lib.youtube.client import YouTube
 from .helper import v3, ResourceManager, yt_specials, yt_playlist, yt_login, yt_setup_wizard, yt_video, \
     yt_context_menu, yt_play, yt_old_actions, UrlResolver, UrlToItemConverter
 from .youtube_exceptions import LoginException
+import xbmcaddon
+import xbmcvfs
 
 
 class Provider(kodion.AbstractProvider):
@@ -113,6 +117,7 @@ class Provider(kodion.AbstractProvider):
             context.log_debug('Selecting YouTube config "%s"' % youtube_config['system'])
 
             language = context.get_settings().get_string('youtube.language', 'en-US')
+            region = context.get_settings().get_string('youtube.region', 'US')
 
             # remove the old login.
             if access_manager.has_login_credentials():
