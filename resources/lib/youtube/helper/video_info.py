@@ -319,6 +319,12 @@ class VideoInfo(object):
         '251': {'container': 'webm',
                 'dash/audio': True,
                 'audio': {'bitrate': 160, 'encoding': 'opus'}},
+        # === DASH adaptive
+        '9999': {'container': 'mpd',
+                 'dash/audio': True,
+                 'dash/video': True,
+                 'audio': {'bitrate': 0, 'encoding': ''},
+                 'video': {'height': 0, 'encoding': ''}}
     }
 
     def __init__(self, context, access_token='', language='en-US'):
@@ -335,7 +341,7 @@ class VideoInfo(object):
 
         headers = {'Host': 'www.youtube.com',
                    'Connection': 'keep-alive',
-                   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
                    'Accept': '*/*',
                    'DNT': '1',
                    'Referer': 'https://www.youtube.com',
@@ -363,41 +369,17 @@ class VideoInfo(object):
                 pass
             pass
 
-        """
-        itag_map = {}
-        itag_map.update(self.DEFAULT_ITAG_MAP)
-        re_match = re.match('.+\"fmt_list\": \"(?P<fmt_list>.+?)\".+', html)
-        if re_match:
-            fmt_list = re_match.group('fmt_list')
-            fmt_list = fmt_list.split(',')
-
-            for value in fmt_list:
-                value = value.replace('\/', '|')
-
-                try:
-                    attr = value.split('|')
-                    sizes = attr[1].split('x')
-                    itag_map[attr[0]] = {'width': int(sizes[0]),
-                                         'height': int(sizes[1])}
-                except:
-                    # do nothing
-                    pass
-                pass
-            pass
-        """
+        re_match_hlsvp = re.search(r'\"hlsvp\"[^:]*:[^"]*\"(?P<hlsvp>[^"]*\")', html)
+        if re_match_hlsvp:
+            hlsvp = urllib.unquote(re_match_hlsvp.group('hlsvp')).replace('\/', '/')
+            return self._load_manifest(hlsvp, video_id)
 
         re_match_js = re.search(r'\"js\"[^:]*:[^"]*\"(?P<js>.+?)\"', html)
-        js = ''
         cipher = None
         if re_match_js:
             js = re_match_js.group('js').replace('\\', '').strip('//')
             cipher = Cipher(self._context, java_script_url=js)
             pass
-
-        re_match_hlsvp = re.search(r'\"hlsvp\"[^:]*:[^"]*\"(?P<hlsvp>[^"]*\")', html)
-        if re_match_hlsvp:
-            hlsvp = urllib.unquote(re_match_hlsvp.group('hlsvp')).replace('\/', '/')
-            return self._load_manifest(hlsvp, video_id)
 
         re_match = re.search(r'\"url_encoded_fmt_stream_map\"[^:]*:[^"]*\"(?P<url_encoded_fmt_stream_map>[^"]*\")',
                              html)
@@ -478,7 +460,7 @@ class VideoInfo(object):
     def _load_manifest(self, url, video_id):
         headers = {'Host': 'manifest.googlevideo.com',
                    'Connection': 'keep-alive',
-                   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
                    'Accept': '*/*',
                    'DNT': '1',
                    'Referer': 'https://www.youtube.com/watch?v=%s' % video_id,
@@ -514,26 +496,20 @@ class VideoInfo(object):
     def _method_get_video_info(self, video_id):
         headers = {'Host': 'www.youtube.com',
                    'Connection': 'keep-alive',
-                   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
                    'Accept': '*/*',
                    'DNT': '1',
                    'Referer': 'https://www.youtube.com/tv',
                    'Accept-Encoding': 'gzip, deflate',
                    'Accept-Language': 'en-US,en;q=0.8,de;q=0.6'}
         params = {'video_id': video_id,
-                  'hl': self._language,
-                  'ps': 'leanback',
-                  'el': 'leanback',
-                  'width': '1920',
-                  'height': '1080',
+                  'hl': self.language,
+                  'gl': self.region,
+                  'eurl': 'https://youtube.googleapis.com/v/' + video_id,
                   'ssl_stream': '1',
-                  'c': 'TVHTML5',
-                  'cver': '4',
-                  'cplayer': 'UNIPLAYER',
-                  'cbr': 'Chrome',
-                  'cbrver': '40.0.2214.115',
-                  'cos': 'Windows',
-                  'cosver': '6.1'}
+                  'ps': 'default',
+                  'el': 'default'}
+
         if self._access_token:
             params['access_token'] = self._access_token
             pass
@@ -600,6 +576,20 @@ class VideoInfo(object):
                 pass
             pass
         """
+
+        if self._context.get_settings().use_dash():
+            mpd_url = params.get('dashmpd', None)
+            use_cipher_signature = 'True' == params.get('use_cipher_signature', None)
+            if mpd_url:
+                if use_cipher_signature or re.search('/s/[0-9A-F\.]+', mpd_url):
+                    # fuck!!! in this case we must call the web page
+                    return self._method_watch(video_id)
+                video_stream = {'url': mpd_url,
+                                'title': meta_info['video'].get('title', ''),
+                                'meta': meta_info}
+                video_stream.update(self.FORMAT.get('9999'))
+                stream_list.append(video_stream)
+                return stream_list
 
         # extract streams from map
         url_encoded_fmt_stream_map = params.get('url_encoded_fmt_stream_map', '')

@@ -476,6 +476,34 @@ class Provider(kodion.AbstractProvider):
         result.extend(v3.response_to_items(self, context, json_data))
         return result
 
+    @kodion.RegisterProviderPath('^/config/mpd/$')
+    def configure_mpd_inputstream(self, context, query):
+        xbmcaddon.Addon(id='inputstream.mpd').openSettings()
+
+    @kodion.RegisterProviderPath('^/maintain/(?P<maint_type>.*)/(?P<action>.*)/$')
+    def maintenance_actions(self, context, re_match):
+        maint_type = re_match.group('maint_type')
+        action = re_match.group('action')
+        if action == 'clear':
+            if maint_type == 'function_cache':
+                if context.get_ui().on_remove_content(context.localize(30557)):
+                    context.get_function_cache().clear()
+            elif maint_type == 'search_cache':
+                if context.get_ui().on_remove_content(context.localize(30558)):
+                    context.get_search_history().clear()
+        elif action == 'delete':
+                _maint_files = {'function_cache': 'cache.sqlite',
+                                'search_cache': 'search.sqlite',
+                                'settings_xml': 'settings.xml'}
+                _file = _maint_files.get(maint_type, '')
+                if _file:
+                    if 'sqlite' in _file:
+                        _file_w_path = os.path.join(context._get_cache_path(), _file)
+                    else:
+                        _file_w_path = os.path.join(context._data_path, _file)
+                    if context.get_ui().on_delete_content(_file):
+                        xbmcvfs.delete(_file_w_path)
+
     def on_root(self, context, re_match):
         """
         Support old YouTube url calls, but also log a deprecation warnings.
